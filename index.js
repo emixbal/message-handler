@@ -7,17 +7,18 @@ var path = require('path');
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('view engine', 'jade');
 
 app.use(require('express').static(path.join(__dirname, 'public')));
 app.use(require('express').static(path.join(__dirname, 'bower_components')));
 
-app.get('/', function(req, res) {
-  return res.render('index');
-});
+function ensureToken(req, res, next){
+  console.log("hallo");
+}
 
 io.on('connection', function(socket) {
   socket.on('chat:pesan', function(pesan) {
+    // console.log(socket.handshake.query);
     io.emit('chat:pesan', pesan);
   });
 });
